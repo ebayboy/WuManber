@@ -27,7 +27,7 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 		m = (m == 0) ? iter->length() : std::min(iter->length(), m);
 	}
 
-	std::cout << "m: " << m << std::endl;
+	//std::cout << "m: " << m << std::endl;
 
 	//Init of tables for each block in each pattern
 	std::size_t pattern_index = 0;
@@ -37,7 +37,9 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 		for (std::size_t char_index = 0; char_index < m - B + 1; ++char_index) {
 			std::string block = pattern_iter->substr(char_index, B);
 			std::size_t block_pos = m - char_index - B;
-			//std::cout << "Char index: " << char_index << std::endl;
+#if 0
+			std::cout << "Char index: " << char_index << std::endl;
+#endif
 			std::size_t last_shift = (block_pos == 0) ? m - B + 1 : block_pos;
 
 			//Init of SHIFT table
@@ -61,6 +63,7 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 		}
 	}
 
+#if 0
 	std::cout << "\nShift table:\n";
 	for (auto& shift : shift_table)
 		std::cout << shift.first << "->" << shift.second << std::endl;
@@ -69,6 +72,7 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 	for (auto& shift : aux_shift_table)
 		std::cout << shift.first << "->" << shift.second << std::endl;
 	std::cout << std::endl;
+#endif
 
 	initialized = true;
 }

@@ -1,1 +1,1 @@
-g++ -g -O0 test.cc  -I./ -o test
+g++ -g -O0 -std=c++17 test.cc  -I./ -o test

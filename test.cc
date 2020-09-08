@@ -24,7 +24,7 @@ int main()
 
 	cout << wu << endl;
  
-#if 0
+#if 1
 	vector<WMResult_t> results;
 	int ret = wu.Search(Text, &results);
 	cout << "hit_count:" << ret << endl;

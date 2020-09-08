@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include <string>
+
 struct WMResult_t {
 	std::size_t pattern_id;
 	std::size_t index;
@@ -78,11 +80,17 @@ class WuManber {
 	//destructor
 		virtual ~WuManber() {};
 
-		//search
+		//FUNCTION:
+		//	Search text with patterns;
+		//@text:
+		//	intput text
+		//@wmresults : 
+		//	not nullptr: output result_set
+		//	nullptr: not output result_set
 		//RETURN:
 		//	error: -1
 		//  ok : hit count 
-		int Search(const std::string& text, std::vector<WMResult_t> *wmresults)
+		int Search(const std::string & text, std::vector<WMResult_t> *wmresults)
 		{
 			int hit_count = 0;
 

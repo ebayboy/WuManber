@@ -1,24 +1,10 @@
 #include "WuManber.hpp"
 #include <iostream>
 
-WuManber::WuManber():
-	initialized(false),
-	B(2),//Block size
-	m(0),//Patterns minimum length
-	patterns(),//Vector of patterns
-	shift_table(),//SHIFT table, according to paper
-	aux_shift_table(),//Auxiliary shift table (ASHIFT)
-	hash_table()//HASH table
-{}
+WuManber::(const std::vector<std::string>& patterns) :
 
-WuManber::WuManber(const std::vector<std::string>& patterns_in) {
-	WuManber();
-	initialize(patterns_in);
-}
-
-WuManber::~WuManber(){}
-
-void WuManber::initialize(std::vector<std::string> const & patterns_in) {
+void WuManber::initialize(std::vector<std::string> const & patterns_in) 
+{
 
 	patterns.assign(patterns_in.begin(), patterns_in.end());
 
@@ -26,8 +12,6 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 	for (auto iter = patterns.begin(); iter != patterns.end(); ++iter) {
 		m = (m == 0) ? iter->length() : std::min(iter->length(), m);
 	}
-
-	//std::cout << "m: " << m << std::endl;
 
 	//Init of tables for each block in each pattern
 	std::size_t pattern_index = 0;
@@ -37,9 +21,6 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 		for (std::size_t char_index = 0; char_index < m - B + 1; ++char_index) {
 			std::string block = pattern_iter->substr(char_index, B);
 			std::size_t block_pos = m - char_index - B;
-#if 0
-			std::cout << "Char index: " << char_index << std::endl;
-#endif
 			std::size_t last_shift = (block_pos == 0) ? m - B + 1 : block_pos;
 
 			//Init of SHIFT table
@@ -47,8 +28,9 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 				last_shift = shift_table[block];
 				shift_table[block] = std::min(shift_table[block], block_pos);
 			}
-			else
+			else {
 				shift_table[block] = block_pos;
+			}
 
 			//Init of HASH table
 			if (block_pos == 0) {
@@ -63,23 +45,13 @@ void WuManber::initialize(std::vector<std::string> const & patterns_in) {
 		}
 	}
 
-#if 0
-	std::cout << "\nShift table:\n";
-	for (auto& shift : shift_table)
-		std::cout << shift.first << "->" << shift.second << std::endl;
-
-	std::cout << "\nAux Shift table:\n";
-	for (auto& shift : aux_shift_table)
-		std::cout << shift.first << "->" << shift.second << std::endl;
-	std::cout << std::endl;
-#endif
-
 	initialized = true;
 }
 
-std::list<Occurrence> WuManber::search(const std::string& text, const std::size_t line) const {
+std::list<WMResult_t> WuManber::search(const std::string& text, const std::size_t line) const {
 	
-	std::list<Occurrence> occurrences;
+	std::list<WMResult_t> occurrences;
+
 	if (initialized) {
 		//std::cout << "Searching!\n" << std::endl;
 
@@ -111,7 +83,7 @@ std::list<Occurrence> WuManber::search(const std::string& text, const std::size_
 							}
 						}
 						if (i == pattern.length()) {
-							Occurrence occurrence = {};
+							WMResult_t occurrence = {};
 							occurrence.index = char_pos;
 							occurrence.pattern = pattern;
                             occurrence.line = line;

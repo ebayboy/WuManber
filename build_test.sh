@@ -1,1 +1,1 @@
-g++ test.cc  WuManber.cpp  -I./ -o test
+g++ -g -O0 test.cc  -I./ -o test

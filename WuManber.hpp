@@ -106,7 +106,7 @@ class WuManber {
 					if (shift_value->second == 0) {//Possible match
 						auto possibles = hash_table.at(block);
 						for (size_t j = 0; j < patterns.size(); j++) {
-							std::string pattern = patterns[j];
+							std::string_view pattern = patterns[j];
 							std::size_t char_pos = char_index - m + B;
 							std::size_t i;
 							for (i = 0; i < pattern.length(); ++i) {

@@ -105,8 +105,8 @@ class WuManber {
 				if (shift_value != shift_table.end()) {
 					if (shift_value->second == 0) {//Possible match
 						auto possibles = hash_table.at(block);
-						for (size_t j = 0; j < patterns.size(); j++) {
-							std::string_view pattern = patterns[j];
+						for (auto pattern_iter = possibles.begin(); pattern_iter != possibles.end(); ++pattern_iter) { 
+							std::string_view pattern = patterns[*pattern_iter];
 							std::size_t char_pos = char_index - m + B;
 							std::size_t i;
 							for (i = 0; i < pattern.length(); ++i) {
@@ -117,7 +117,7 @@ class WuManber {
 							if (i == pattern.length()) {
 								hit_count++;
 								if (wmresults) {
-									WMResult_t r{patterns_id.at(j), char_pos};
+									WMResult_t r{patterns_id.at(*pattern_iter), char_pos};
 									wmresults->emplace_back(r);
 								}
 							}
